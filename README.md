@@ -5,7 +5,7 @@ This project is designed for the STM32F401 microcontroller using PlatformIO. It 
 ## Project Structure
 
 - **src/**: Contains the main application code.
-  - **main.cpp**: The main entry point of the application.
+  - **main.c**: The main entry point of the application.
   
 - **include/**: Intended for header files. You can add your custom header files here.
 
