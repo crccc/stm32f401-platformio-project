@@ -28,3 +28,6 @@ This project is designed for the STM32F401 microcontroller using PlatformIO. It 
 ## Additional Information
 
 Refer to the documentation of PlatformIO for more details on configuration options and usage.
+
+## Documents
+[My learning experiences](doc/note.md)
