@@ -1,9 +1,11 @@
 # STM32F401 PlatformIO Project
 
-This project is designed for the STM32F401 microcontroller using PlatformIO. It serves as a basic template to get started with development on this platform.
+This project is designed for the STM32F401 microcontroller learning of using PlatformIO. 
 
 ## Project Structure
 
+- **doc/**: Learning notes
+  
 - **src/**: Contains the main application code.
   - **main.c**: The main entry point of the application.
   
@@ -13,21 +15,32 @@ This project is designed for the STM32F401 microcontroller using PlatformIO. It 
 
 - **platformio.ini**: Configuration file for PlatformIO, specifying board type, framework, and libraries.
 
-## Getting Started
 
-1. **Install PlatformIO**: Make sure you have PlatformIO installed in your development environment.
+# 🌱 STM32 Learning Roadmap (C / C++ + HAL + PlatformIO)
 
-2. **Clone the Repository**: Clone this project to your local machine.
+## ✅ Phase 1: Essential Foundations
 
-3. **Open the Project**: Open the project folder in your IDE.
+| Topic               | Description                                         |
+|--------------------|-----------------------------------------------------|
+| GPIO Input / Output| Buttons, switches, [LED Blink](doc/gpio/led-blink.md)                        |
+| UART Communication | Print debug info, receive serial commands           |
+| Timer / PWM        | LED brightness, precise delays, motor control       |
+| External Interrupt | Button-triggered events, wake-up applications       |
+| ADC                | Read analog sensors (e.g., potentiometers, temp)    |
+| I2C / SPI / UART   | Communicate with displays, sensors, modules         |
+| DMA                | Efficient data transfer (e.g., UART/ADC with DMA)   |
+| System Structure   | C++ modularization or FreeRTOS for multitasking     |
 
-4. **Build the Project**: Use the PlatformIO build command to compile the project.
+---
 
-5. **Upload the Firmware**: Connect your STM32F401 board and upload the firmware using PlatformIO.
+## 🧪 Mini Project Ideas
 
-## Additional Information
+| Project Name           | Concepts Used                              |
+|------------------------|--------------------------------------------|
+| Digital Thermometer    | UART + ADC + temperature sensor (NTC)      |
+| Breathing Light        | PWM + Timer                                |
+| Digital Voltmeter      | ADC + OLED (via I2C)                       |
+| UART Command Receiver  | Serial input to control GPIO               |
+| IR Remote Receiver     | Timer + External Interrupt + Signal Decode |
 
-Refer to the documentation of PlatformIO for more details on configuration options and usage.
-
-## Documents
-[My learning experiences](doc/note.md)
+---

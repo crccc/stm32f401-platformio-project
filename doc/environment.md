@@ -38,6 +38,3 @@ brew install platformio
 ```zsh
 pio run -t upload
 ```
-
-## Lesson
-1. [LED Blink](led-blink.md)
