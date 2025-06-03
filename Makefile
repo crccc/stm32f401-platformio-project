@@ -9,7 +9,7 @@ SYNC_PAIRS := \
     startup_stm32f401xe.s:$(PIO_DIR)/src/startup_stm32f401xe.s
 
 # 主目標：同步 CubeMX → PlatformIO
-sync:
+sync: clean_pio
 	@echo "🔄 同步 CubeMX → PlatformIO 專案"
 	@$(foreach pair, $(SYNC_PAIRS), \
 		src=$(word 1,$(subst :, ,$(pair))); \
@@ -37,4 +37,7 @@ clean_pio:
 upload:
 	cd $(PIO_DIR) && pio run -t upload
 
+build:
+	cd $(PIO_DIR) && pio run
+	
 .PHONY: sync clean_pio
