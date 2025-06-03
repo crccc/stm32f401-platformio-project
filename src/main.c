@@ -90,21 +90,37 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  GPIO_PinState last_state = GPIO_PIN_SET;
+  uint32_t last_press_time = 0;
+  uint32_t debounce_delay = 50; // 50 ms debounce delay
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
-    HAL_GPIO_TogglePin(GPIOA, LD2_Pin);
-    char msg[] = "LED toggled\r\n";
-    HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
-
-    HAL_Delay(500);
-    /* USER CODE BEGIN 3 */
+    GPIO_PinState current_state = HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin);
+    if(current_state== GPIO_PIN_SET && last_state == GPIO_PIN_RESET) {
+      last_state = GPIO_PIN_SET; // Update the last state to released
+      // Button is released, turn off the LED
+      HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET); // Turn off the LED
+      char msg[50] = "Button Released, LED Off\r\n";
+      HAL_UART_Transmit(&huart2, (uint8_t *)msg, strlen(msg), HAL_MAX_DELAY);
+    } else if (current_state == GPIO_PIN_RESET && last_state == GPIO_PIN_SET) { 
+      if(HAL_GetTick() - last_press_time > debounce_delay) {
+        last_press_time = HAL_GetTick(); // Record the time of the press
+        last_state = GPIO_PIN_RESET; // Update the last state to pressed
+        // Button is pressed, toggle the LED
+        HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+        char msg[50] = "Button Pressed, Toggling LED\r\n";
+        HAL_UART_Transmit(&huart2, (uint8_t *)msg, strlen(msg), HAL_MAX_DELAY);
+      }
+    } else { 
+      // No change in button state
+    }
   }
+  /* USER CODE END WHILE */
+  /* USER CODE BEGIN 3 */
   /* USER CODE END 3 */
 }
 
@@ -210,7 +226,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 

@@ -18,18 +18,82 @@ This project is designed for the STM32F401 microcontroller learning of using Pla
 
 # 🌱 STM32 Learning Roadmap (C / C++ + HAL + PlatformIO)
 
-## ✅ Phase 1: Essential Foundations
+## ⚙️ Phase 0: Setup & First Flash
+| Lesson | Topic                    | Outcome                              |
+| ------ | ------------------------ | ------------------------------------ |
+| 0.1    | [PlatformIO + CubeMX sync](doc/environment.md) | Set up and build STM32 project flow  |
+| 0.2    | [LED blink with HAL](doc/gpio/led-blink.md)| Confirm flashing + basic GPIO output |
 
-| Topic               | Description                                         |
-|--------------------|-----------------------------------------------------|
-| GPIO Input / Output| Buttons, switches, [LED Blink](doc/gpio/led-blink.md)                        |
-| UART Communication | Print debug info, receive serial commands           |
-| Timer / PWM        | LED brightness, precise delays, motor control       |
-| External Interrupt | Button-triggered events, wake-up applications       |
-| ADC                | Read analog sensors (e.g., potentiometers, temp)    |
-| I2C / SPI / UART   | Communicate with displays, sensors, modules         |
-| DMA                | Efficient data transfer (e.g., UART/ADC with DMA)   |
-| System Structure   | C++ modularization or FreeRTOS for multitasking     |
+---
+
+## ⚙️ Phase 1: GPIO + Timing
+| Lesson | Topic                            | Skills Acquired                    |
+| ------ | -------------------------------- | ---------------------------------- |
+| 1.1    | [`HAL_GPIO_TogglePin()`](doc/gpio/led-blink.md###HAL_GPIO_TogglePin)| GPIO output, LED blink|
+| 1.2    | [`HAL_Delay()`](doc/gpio/led-blink.md###HAL_Delay)| Basic blocking delay|
+| 1.3    | [`HAL_GetTick()`](doc/gpio/led-blink.md###HAL_Delay)| Non-blocking loop, software timer  |
+| 1.4    | [`HAL_GPIO_ReadPin()`](doc/gpio/button.md)| Read button via `HAL_GPIO_ReadPin`, Edge detection + software debounce|
+
+---
+
+## 🧪 Phase 2: UART & Serial Communication
+
+| Lesson | Topic                      | Skills Gained                             |
+|--------|----------------------------|-------------------------------------------|
+| 2.1    | UART `printf` via USB      | Serial debug output                       |
+| 2.2    | Receive UART commands      | Control LED via typed commands            |
+| 2.3    | Non-blocking UART + RingBuf| Prepare for sensor data input             |
+
+---
+
+## ⚡ Phase 3: Timer, PWM & Delay Accuracy
+
+| Lesson | Topic                    | Skills Gained                              |
+|--------|--------------------------|--------------------------------------------|
+| 3.1    | Timer-based LED blink    | Use hardware timer                         |
+| 3.2    | PWM for brightness       | LED dimming with `HAL_TIM_PWM_Start()`     |
+| 3.3    | Servo control with PWM   | Precision PWM control                      |
+
+---
+
+## 📈 Phase 4: ADC & Analog Sensor Input
+
+| Lesson | Topic                     | Skills Gained                              |
+|--------|---------------------------|--------------------------------------------|
+| 4.1    | Basic ADC                 | Read potentiometer, convert to voltage     |
+| 4.2    | ADC + OLED                | Display sensor values                      |
+| 4.3    | ADC with DMA              | Efficient analog sampling                  |
+
+---
+
+## 🔌 Phase 5: I2C & SPI Communication
+
+| Lesson | Topic                     | Skills Gained                              |
+|--------|---------------------------|--------------------------------------------|
+| 5.1    | I2C OLED display          | Display text over SSD1306                  |
+| 5.2    | Read digital sensor (I2C) | e.g., temperature, IMU                     |
+| 5.3    | SPI display or SD card    | Fast peripheral communication              |
+
+---
+
+## 🧠 Phase 6: Structuring + C++ (optional)
+
+| Lesson | Topic                         | Skills Gained                            |
+|--------|-------------------------------|------------------------------------------|
+| 6.1    | Modular C file structure       | `gpio.c`, `uart.c`, etc.                 |
+| 6.2    | Wrap peripherals in C++       | C++ class for LED, Button, UART          |
+| 6.3    | HAL + C++ OOP architecture    | Clean project structure                  |
+
+---
+
+## 🧩 Bonus Phase: Advanced / Optional
+
+| Lesson | Topic                    | Use Case                                 |
+|--------|--------------------------|------------------------------------------|
+| B.1    | External Interrupts (EXTI)| Button with interrupt handler            |
+| B.2    | FreeRTOS                 | Task scheduling and delay accuracy       |
+| B.3    | USB CDC / HID device     | Use MCU as virtual serial / keyboard     |
+
 
 ---
 
