@@ -38,3 +38,23 @@ brew install platformio
 ```zsh
 pio run -t upload
 ```
+
+## STM32 SWD/JTAG debug interface disabled (Q__Q)
+### !! How to fix !!
+#### Connect Under Reset
+1. platformio.ini change to following content
+```
+[env:nucleo_f401re]
+platform = ststm32
+board = nucleo_f401re
+framework = stm32cube
+upload_protocol = stlink
+upload_flags =
+  -c "reset_config srst_only srst_nogate connect_assert_srst"
+
+```
+2. Before Upload
+   1. hold hardware RESET button
+   2. ```pio run -t upload```
+   3. wait all things done and release RESET button
+   4. Revert platform and upload correct firmware
