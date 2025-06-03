@@ -22,17 +22,17 @@ This project is designed for the STM32F401 microcontroller learning of using Pla
 | Lesson | Topic                    | Outcome                              |
 | ------ | ------------------------ | ------------------------------------ |
 | 0.1    | [PlatformIO + CubeMX sync](doc/environment.md) | Set up and build STM32 project flow  |
-| 0.2    | [LED blink with HAL](doc/gpio/led-blink.md)| Confirm flashing + basic GPIO output |
+| 0.2    | [LED blink with HAL](doc/GPIO/led-blink.md)| Confirm flashing + basic GPIO output |
 
 ---
 
 ## ⚙️ Phase 1: GPIO + Timing
 | Lesson | Topic                            | Skills Acquired                    |
 | ------ | -------------------------------- | ---------------------------------- |
-| 1.1    | [`HAL_GPIO_TogglePin()`](doc/gpio/led-blink.md###HAL_GPIO_TogglePin)| GPIO output, LED blink|
-| 1.2    | [`HAL_Delay()`](doc/gpio/led-blink.md###HAL_Delay)| Basic blocking delay|
-| 1.3    | [`HAL_GetTick()`](doc/gpio/led-blink.md###HAL_Delay)| Non-blocking loop, software timer  |
-| 1.4    | [`HAL_GPIO_ReadPin()`](doc/gpio/button.md)| Read button via `HAL_GPIO_ReadPin`, Edge detection + software debounce|
+| 1.1    | [`HAL_GPIO_TogglePin()`](doc/GPIO/led-blink.md###HAL_GPIO_TogglePin)| GPIO output, LED blink|
+| 1.2    | [`HAL_Delay()`](doc/GPIO/led-blink.md###HAL_Delay)| Basic blocking delay|
+| 1.3    | [`HAL_GetTick()`](doc/GPIO/led-blink.md###HAL_Delay)| Non-blocking loop, software timer  |
+| 1.4    | [`HAL_GPIO_ReadPin()`](doc/GPIO/button.md)| Read button via `HAL_GPIO_ReadPin`, Edge detection + software debounce|
 
 ---
 
