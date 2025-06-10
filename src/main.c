@@ -18,10 +18,11 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "usart.h"
+#include "stm32f4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <string.h>
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -36,11 +37,19 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+#ifdef __GNUC__
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#elif
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif
+#define UART_BUF_SIZE 64 // Define a buffer size for UART reception
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-
+UART_HandleTypeDef huart2;
+volatile uint8_t uart_rx_data;
+volatile char uart_buffer[UART_BUF_SIZE];
+volatile uint16_t uart_buf_idx = 0;
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -92,6 +101,7 @@ int main(void)
   GPIO_PinState last_state = GPIO_PIN_SET;
   uint32_t last_press_time = 0;
   uint32_t debounce_delay = 50; // 50 ms debounce delay
+  HAL_UART_Receive_IT(&huart2, &uart_rx_data, 1); // Start UART receive interrupt
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -274,3 +284,39 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
+PUTCHAR_PROTOTYPE {
+  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
+  return ch;
+}
+
+/**
+  * @brief  This function is called when the UART receives data in interrupt mode.
+  * @param  huart: UART handle pointer
+  * @retval None
+  */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+  if (huart->Instance == USART2) {
+      if (uart_buf_idx < UART_BUF_SIZE - 1) {
+          uart_buffer[uart_buf_idx++] = uart_rx_data;
+
+          if (uart_rx_data == '\n') {
+              uart_buffer[uart_buf_idx] = '\0';  // null-terminate
+              uart_buf_idx = 0;
+
+              // Handle complete command
+              if (strncmp((char*)uart_buffer, "on", 2) == 0) {
+                  HAL_GPIO_WritePin(GPIOA, LD2_Pin, GPIO_PIN_SET);
+                  printf("LED ON\r\n");
+              } else if (strncmp((char*)uart_buffer, "off", 3) == 0) {
+                  HAL_GPIO_WritePin(GPIOA, LD2_Pin, GPIO_PIN_RESET);
+                  printf("LED OFF\r\n");
+              } else {
+                  printf("Unknown cmd: %s\r\n", uart_buffer);
+              }
+          }
+      }
+
+      HAL_UART_Receive_IT(&huart2, &uart_rx_data, 1);  // re-arm IRQ
+  }
+}

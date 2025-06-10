@@ -42,7 +42,6 @@ This project is designed for the STM32F401 microcontroller learning of using Pla
 |--------|----------------------------|-------------------------------------------|
 | 2.1    | UART `printf` via USB      | Serial debug output                       |
 | 2.2    | Receive UART commands      | Control LED via typed commands            |
-| 2.3    | Non-blocking UART + RingBuf| Prepare for sensor data input             |
 
 ---
 
