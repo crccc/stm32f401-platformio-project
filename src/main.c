@@ -18,7 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
+#include "usart.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <string.h>
@@ -40,7 +40,6 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 
@@ -104,16 +103,14 @@ int main(void)
       last_state = GPIO_PIN_SET; // Update the last state to released
       // Button is released, turn off the LED
       HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET); // Turn off the LED
-      char msg[50] = "Button Released, LED Off\r\n";
-      HAL_UART_Transmit(&huart2, (uint8_t *)msg, strlen(msg), HAL_MAX_DELAY);
+      printf("Button Released, LED Off\r\n"); 
     } else if (current_state == GPIO_PIN_RESET && last_state == GPIO_PIN_SET) { 
       if(HAL_GetTick() - last_press_time > debounce_delay) {
         last_press_time = HAL_GetTick(); // Record the time of the press
         last_state = GPIO_PIN_RESET; // Update the last state to pressed
         // Button is pressed, toggle the LED
         HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-        char msg[50] = "Button Pressed, Toggling LED\r\n";
-        HAL_UART_Transmit(&huart2, (uint8_t *)msg, strlen(msg), HAL_MAX_DELAY);
+        printf("Button Pressed, Toggling LED\r\n");
       }
     } else { 
       // No change in button state
