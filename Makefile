@@ -35,9 +35,9 @@ clean_pio:
 	@rm -rf $(PIO_DIR)/lib/HAL_Drivers
 
 upload:
-	cd $(PIO_DIR) && pio run -t upload
+	cd $(PIO_DIR) && pio run -t upload && pio device monitor
 
 build:
 	cd $(PIO_DIR) && pio run
-	
+
 .PHONY: sync clean_pio
