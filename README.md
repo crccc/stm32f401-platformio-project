@@ -51,7 +51,7 @@ This project is designed for the STM32F401 microcontroller learning of using Pla
 |--------|--------------------------|--------------------------------------------|
 | 3.1    | Timer-based LED blink    | Use hardware timer                         |
 | 3.2    | PWM for brightness       | LED dimming with `HAL_TIM_PWM_Start()`     |
-| 3.3    | Servo control with PWM   | Precision PWM control                      |
+| 3.3 (Pending)   | Servo control with PWM   | Precision PWM control                      |
 
 ---
 
