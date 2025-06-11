@@ -8,6 +8,12 @@ SYNC_PAIRS := \
     Core/Inc:$(PIO_DIR)/include \
     startup_stm32f401xe.s:$(PIO_DIR)/src/startup_stm32f401xe.s
 
+build:
+	cd $(PIO_DIR) && pio run
+
+upload:
+	cd $(PIO_DIR) && pio run -t upload && pio device monitor
+
 # 主目標：同步 CubeMX → PlatformIO
 sync: clean_pio
 	@echo "🔄 同步 CubeMX → PlatformIO 專案"
@@ -33,11 +39,5 @@ clean_pio:
 	@rm -rf $(PIO_DIR)/src/*
 	@rm -rf $(PIO_DIR)/include/*
 	@rm -rf $(PIO_DIR)/lib/HAL_Drivers
-
-upload:
-	cd $(PIO_DIR) && pio run -t upload && pio device monitor
-
-build:
-	cd $(PIO_DIR) && pio run
 
 .PHONY: sync clean_pio
