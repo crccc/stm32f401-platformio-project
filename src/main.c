@@ -106,6 +106,8 @@ int main(void)
   uint32_t last_press_time = 0;
   uint32_t debounce_delay = 50; // 50 ms debounce delay
   HAL_UART_Receive_IT(&huart2, &uart_rx_data, 1); // Start UART receive interrupt
+  HAL_TIM_Base_Start_IT(&htim3); // Start TIM3 for periodic tasks if needed
+  printf("System Initialized\r\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -367,5 +369,20 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
       }
 
       HAL_UART_Receive_IT(&huart2, &uart_rx_data, 1);  // re-arm IRQ
+  }
+}
+
+/**
+  * @brief  This function is called periodically by TIM3.
+  * @param  htim: TIM handle pointer
+  * @retval None
+  * 
+  * Prescaler = 8399 → Timer tick = 10kHz (84MHz / 8400)
+  * Period = 9999    → Overflow every 1s (10kHz / 10,000)
+  * 
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+  if (htim->Instance == TIM3) {
+      HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);  // toggle LED
   }
 }
